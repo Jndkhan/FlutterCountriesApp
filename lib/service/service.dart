@@ -4,7 +4,8 @@ import 'package:flutter_country_app/repository/api_repository.dart';
 
 class Service {
   final String baseUrl = "https://restcountries.com/v3.1/all";
-  final String baseUrlPlaceHolder = "https://jsonplaceholder.typicode.com/posts/";
+  final String baseUrlPlaceHolder =
+      "https://jsonplaceholder.typicode.com/posts/";
 
   Future getCountries(
       {Function()? before,
@@ -23,7 +24,6 @@ class Service {
         onSuccess((data as List).map((e) => CountryModel.Json(e)).toList());
       }
     }, onError: (error) {
-
       if (onError != null) {
         print("inside on error in service: $error");
         onError(error);
@@ -31,27 +31,24 @@ class Service {
     });
   }
 
-
   Future getUsers(
-      {Function()? before,
-        Function(List<UserModel> mdlUser)? onSuccess,
-        Function(dynamic data)? onError}) async => ApiRepository(url: baseUrlPlaceHolder).get(
-      beforeSend: () {
+          {Function()? before,
+          Function(List<UserModel> mdlUser)? onSuccess,
+          Function(dynamic data)? onError}) async =>
+      ApiRepository(url: baseUrlPlaceHolder).get(beforeSend: () {
         if (before != null) {
           print("before send");
           before;
         }
       }, onSuccess: (data) {
-    if (onSuccess != null) {
-      print("onSuccess send");
-      onSuccess((data as List).map((e) => UserModel.Json(e)).toList());
-    }
-  }, onError: (error) {
-    print("error send");
-    if (onError != null) {
-      onError(error);
-    }
-  });
-
-
+        if (onSuccess != null) {
+          print("onSuccess send");
+          onSuccess((data as List).map((e) => UserModel.Json(e)).toList());
+        }
+      }, onError: (error) {
+        print("error send");
+        if (onError != null) {
+          onError(error);
+        }
+      });
 }
