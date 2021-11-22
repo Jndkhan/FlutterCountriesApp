@@ -13,7 +13,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUsers();
+    //getUsers();
   }
 
   getCountries() {
@@ -45,7 +45,7 @@ class HomeController extends GetxController {
   }
 
 
-  getUsers() {
+  Future<List<UserModel>> getUsers() async{
     Service().getUsers(before: () {
       print("before send");
     }, onSuccess: (data) {
@@ -57,5 +57,6 @@ class HomeController extends GetxController {
     }, onError: (error) {
       print("the error is $error");
     });
+    return usermodel;
   }
 }
