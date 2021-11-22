@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_country_app/models/user_info_model.dart';
 import 'package:flutter_country_app/models/user_model.dart';
 import 'package:get/get.dart';
 
@@ -9,9 +10,7 @@ class UsersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     return GetBuilder<HomeController>(builder: (controller) {
       return SafeArea(
         child: Scaffold(
@@ -27,36 +26,31 @@ class UsersScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             child:
-            /*controller.usermodel.isEmpty
+                /*controller.usermodel.isEmpty
                 ? const Center(
               child: CircularProgressIndicator(),
             )*/
-            //  :
-            FutureBuilder(
+                //  :
+                FutureBuilder(
               future: controller.getUsers(),
               builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                return ListView.builder(
-                itemBuilder: (context, index) {
-                return Container(
-                child: ListTile(
-                leading: Container(
-                child: Text(snapshot.data![index].id.toString()),
-                ),
-                title: Text(snapshot.data![index].title),
-                subtitle: Text(snapshot.data![index].body),
-                ),
-                );
-                },
-                itemCount: snapshot.data?.length,
-                );
-              }
-                return
-                const
-                CircularProgressIndicator
-                (
-                );
-
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: ListTile(
+                          leading: Container(
+                            child: Text(snapshot.data![index].id.toString()),
+                          ),
+                          title: Text(snapshot.data![index].title),
+                          subtitle: Text(snapshot.data![index].body),
+                        ),
+                      );
+                    },
+                    itemCount: snapshot.data?.length,
+                  );
+                }
+                return const CircularProgressIndicator();
               },
             ),
           ),

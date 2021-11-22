@@ -1,4 +1,5 @@
 import 'package:flutter_country_app/models/country_model.dart';
+import 'package:flutter_country_app/models/user_info_model.dart';
 import 'package:flutter_country_app/models/user_model.dart';
 import 'package:flutter_country_app/service/service.dart';
 import 'package:flutter_country_app/sqflite/database_helper.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   List<CountryModel> model = [];
   List<UserModel> usermodel = [];
+  List<UserInfoModel> userInfoModel = [];
 
 
   @override
@@ -58,5 +60,21 @@ class HomeController extends GetxController {
       print("the error is $error");
     });
     return usermodel;
+  }
+
+
+  Future<List<UserInfoModel>> getUsersInfoDetails() async{
+    Service().getUsersInfoDetails(before: () {
+      print("before send");
+    }, onSuccess: (data) {
+      print("success send");
+      for (int i = 0; i < data.length; i++) {
+        userInfoModel.add(data[i]);
+      }
+      update();
+    }, onError: (error) {
+      print("the error is $error");
+    });
+    return userInfoModel;
   }
 }

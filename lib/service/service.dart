@@ -1,4 +1,5 @@
 import 'package:flutter_country_app/models/country_model.dart';
+import 'package:flutter_country_app/models/user_info_model.dart';
 import 'package:flutter_country_app/models/user_model.dart';
 import 'package:flutter_country_app/repository/api_repository.dart';
 
@@ -6,6 +7,7 @@ class Service {
   final String baseUrl = "https://restcountries.com/v3.1/all";
   final String baseUrlPlaceHolder =
       "https://jsonplaceholder.typicode.com/posts/";
+  final String baseUrl_UserInfoDetails = "https://5e510330f2c0d300147c034c.mockapi.io";
 
   Future getCountries(
       {Function()? before,
@@ -44,6 +46,29 @@ class Service {
         if (onSuccess != null) {
           print("onSuccess send");
           onSuccess((data as List).map((e) => UserModel.Json(e)).toList());
+        }
+      }, onError: (error) {
+        print("error send");
+        if (onError != null) {
+          onError(error);
+        }
+      });
+
+
+
+  Future getUsersInfoDetails(
+      {Function()? before,
+        Function(List<UserInfoModel> mdlUser)? onSuccess,
+        Function(dynamic data)? onError}) async =>
+      ApiRepository(url: baseUrl_UserInfoDetails).get(beforeSend: () {
+        if (before != null) {
+          print("before send");
+          before;
+        }
+      }, onSuccess: (data) {
+        if (onSuccess != null) {
+          print("onSuccess send");
+          onSuccess((data as List).map((e) => UserInfoModel.Json(e)).toList());
         }
       }, onError: (error) {
         print("error send");
